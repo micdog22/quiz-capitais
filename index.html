@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz das Capitais — aprenda os estados e capitais do Brasil brincando</title>
+  <meta name="description" content="Quiz para aprender os estados do Brasil: capitais, siglas, regiões e gentílicos. Múltipla escolha ou resposta digitada, com placar, sequência de acertos e modo estudo.">
+  <meta name="theme-color" content="#15803d">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌎</text></svg>">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <h1><span aria-hidden="true">🌎</span> <span class="title-text">Quiz das Capitais</span></h1>
+    <p class="lead">Aprenda os estados do Brasil brincando: capitais, siglas, regiões e gentílicos.</p>
+  </header>
+
+  <main>
+    <div class="tabs" role="tablist" aria-label="Seções">
+      <button type="button" role="tab" id="aba-jogar" aria-controls="painel-jogar" aria-selected="true">🎮 Jogar</button>
+      <button type="button" role="tab" id="aba-estudo" aria-controls="painel-estudo" aria-selected="false" tabindex="-1">📚 Modo estudo</button>
+    </div>
+
+    <section id="painel-jogar" role="tabpanel" aria-labelledby="aba-jogar">
+      <form class="card setup" id="config">
+        <fieldset>
+          <legend>Escolha o desafio</legend>
+          <div class="mode-grid" id="modos"></div>
+        </fieldset>
+        <div class="setup-row">
+          <fieldset class="pills">
+            <legend>Como responder</legend>
+            <label><input type="radio" name="resposta" value="escolha" checked><span>👆 Múltipla escolha</span></label>
+            <label><input type="radio" name="resposta" value="digitar"><span>⌨️ Digitando</span></label>
+          </fieldset>
+          <fieldset class="pills">
+            <legend>Tamanho da rodada</legend>
+            <label><input type="radio" name="tamanho" value="10" checked><span>10 perguntas</span></label>
+            <label><input type="radio" name="tamanho" value="27"><span>Todas as 27</span></label>
+          </fieldset>
+        </div>
+        <label class="check" for="cronometro">
+          <input type="checkbox" id="cronometro">
+          <span>⏱️ Cronômetro: 15 segundos por pergunta</span>
+        </label>
+        <p class="best" id="melhor" aria-live="polite"></p>
+        <button type="submit" class="btn big" id="comecar">Começar! 🚀</button>
+      </form>
+
+      <section class="card game" id="jogo" hidden aria-labelledby="pergunta">
+        <div class="game-top">
+          <span id="progresso">Pergunta 1 de 10</span>
+          <span><span aria-hidden="true">✅</span> <span id="acertos">0</span> acertos</span>
+          <span><span aria-hidden="true">🔥</span> sequência <span id="sequencia">0</span></span>
+        </div>
+        <div class="bar" aria-hidden="true"><div class="bar-fill" id="barra-progresso"></div></div>
+        <div class="timer" id="cronometro-area" hidden>
+          <div class="bar timer-bar" aria-hidden="true"><div class="bar-fill" id="barra-tempo"></div></div>
+          <span id="tempo-restante">15 s</span>
+        </div>
+        <h2 class="question" id="pergunta" tabindex="-1"></h2>
+        <div class="options" id="alternativas"></div>
+        <form class="typed" id="form-digitar" hidden>
+          <label for="resposta-digitada">Sua resposta</label>
+          <div class="typed-row">
+            <input type="text" id="resposta-digitada" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="send">
+            <button type="submit" class="btn" id="responder">Responder</button>
+          </div>
+          <p class="hint">Pode escrever sem acento: “Sao Paulo” vale.</p>
+        </form>
+        <div class="feedback" id="retorno" aria-live="polite"></div>
+        <div class="game-actions">
+          <button type="button" class="btn big" id="proxima" hidden>Próxima ➜</button>
+          <button type="button" class="btn secondary" id="sair">Sair da rodada</button>
+        </div>
+      </section>
+
+      <section class="card end" id="fim" hidden aria-labelledby="fim-titulo">
+        <p class="stars" id="estrelas" aria-hidden="true"></p>
+        <h2 id="fim-titulo" tabindex="-1"></h2>
+        <p class="end-message" id="fim-mensagem"></p>
+        <p id="fim-detalhes"></p>
+        <p class="record" id="fim-recorde"></p>
+        <div id="revisao"></div>
+        <div class="game-actions">
+          <button type="button" class="btn big" id="de-novo">Jogar de novo</button>
+          <button type="button" class="btn" id="treinar-erros" hidden>Treinar só os erros</button>
+          <button type="button" class="btn secondary" id="outro-desafio">Escolher outro desafio</button>
+        </div>
+      </section>
+    </section>
+
+    <section id="painel-estudo" role="tabpanel" aria-labelledby="aba-estudo" hidden>
+      <div class="card">
+        <h2>Estados, capitais, regiões e gentílicos</h2>
+        <div class="chips" id="filtro-regiao" role="group" aria-label="Filtrar por região"></div>
+        <p class="muted" id="estudo-status" aria-live="polite"></p>
+        <div class="table-wrap">
+          <table class="study-table">
+            <caption class="sr-only">Unidades da federação do Brasil</caption>
+            <thead>
+              <tr><th scope="col">Sigla</th><th scope="col">Estado</th><th scope="col">Capital</th><th scope="col">Região</th><th scope="col">Gentílico</th></tr>
+            </thead>
+            <tbody id="tabela-estados"></tbody>
+          </table>
+        </div>
+        <p class="note">São 26 estados e o Distrito Federal, onde fica Brasília, a capital do país. Fluminense é quem nasce no estado do Rio de Janeiro; quem nasce na cidade do Rio de Janeiro é chamado de carioca. Do mesmo jeito, paulista é quem nasce no estado de São Paulo, e paulistano, quem nasce na cidade de São Paulo.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Tudo roda no seu navegador. Código aberto no <a href="https://github.com/micdog22/quiz-capitais">GitHub</a> · Licença MIT</p>
+  </footer>
+</body>
+</html>

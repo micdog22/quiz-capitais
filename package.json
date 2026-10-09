@@ -1,0 +1,11 @@
+{
+  "name": "quiz-capitais",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Quiz das Capitais: aprenda estados, capitais, siglas, regiões e gentílicos do Brasil brincando.",
+  "type": "module",
+  "scripts": { "test": "node --test" },
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/micdog22/quiz-capitais.git" },
+  "homepage": "https://micdog22.github.io/quiz-capitais/"
+}
