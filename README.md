@@ -1,4 +1,4 @@
-# Quiz das Capitais — aprenda os estados e capitais do Brasil brincando (HTML + JavaScript)
+# Quiz das Capitais: aprenda os estados e capitais do Brasil brincando (HTML + JavaScript)
 
 Um quiz colorido para crianças (e para adultos que esqueceram a matéria) aprenderem as 27 unidades da federação: capitais, siglas, regiões e gentílicos. Funciona no celular, no tablet e no computador, sem cadastro.
 
@@ -41,4 +41,4 @@ npm test
 Issues e pull requests são bem-vindos. Ideias de novos desafios também.
 
 ## Licença
-MIT — veja [LICENSE](LICENSE).
+MIT. Veja [LICENSE](LICENSE).
